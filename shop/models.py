@@ -7,12 +7,15 @@ from users.models import User
 # Create your models here.
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def get_products_count(self):
+        return self.product_set.count()
 
     def __str__(self):
         return self.name
@@ -20,7 +23,7 @@ class ProductCategory(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     description = models.TextField()
@@ -35,13 +38,16 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_cover_image(self):
+        return self.productimage_set.first().get_image_url()
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="product_images")
 
     def __str__(self):
-        return self.product.name
+        return self.image.name
 
     class Meta:
         verbose_name_plural = "Product Images"
