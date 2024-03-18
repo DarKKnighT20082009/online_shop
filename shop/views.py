@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
+from shop.forms import ProductReviewForm
 from shop.models import Product, ProductCategory, ProductImage, ProductReview
 
 
@@ -34,6 +35,13 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'shop/detail.html'
     context_object_name = 'product'
+    # form = ProductReviewForm
+    #
+    # if request.method == 'POST':
+    #     form = ProductReviewForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return render(request, 'shop/detail.html', {'form': form})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

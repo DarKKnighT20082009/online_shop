@@ -45,8 +45,8 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Mening Proifilim</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Kirish</button>
-                            <button class="dropdown-item" type="button">Ro'yhatdan o'tish</button>
+                            <a href="{% url 'login' %}"><button class="dropdown-item" type="button">Kirish</button></a>
+                            <a href="{% url 'register' %}"><button class="dropdown-item" type="button">Ro'yhatdan o'tish</button></a>
                         </div>
                     </div>
                     <div class="btn-group mx-2">
